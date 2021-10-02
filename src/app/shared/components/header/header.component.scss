@@ -1,0 +1,25 @@
+$header-background: #5A5A71;
+
+:host {
+  align-items:      center;
+  background-color: $header-background;
+  display:          flex;
+  justify-content:  space-between;
+  padding:          .5rem 1rem;
+
+  .title {
+    color:          #FFFFFF;
+    text-transform: uppercase;
+  }
+
+  .avatar {
+    align-items:     center;
+    border:          none;
+    border-radius:   50%;
+    cursor:          pointer;
+    display:         flex;
+    height:          2rem;
+    justify-content: center;
+    width:           2rem;
+  }
+}

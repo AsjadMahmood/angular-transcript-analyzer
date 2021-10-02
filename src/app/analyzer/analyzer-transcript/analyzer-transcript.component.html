@@ -1,0 +1,36 @@
+<div class="transcript-card ">
+    <h6 class="transcript-card-header">
+        {{heading}}
+        <span>{{headerInfo}} {{transcriptMatchPercentage | percent}}</span>
+    </h6>
+    <table *ngIf="transcripts && transcripts.length > 0" class="table table-borderless table-responsive ">
+        <thead>
+            <th class="col-sm-2">{{transcriptType === 'real' ? 'Time' : 'Line'}}</th>
+            <th class="col-sm-2">Speaker</th>
+            <th class="col-sm-8">Sentence</th>
+            <hr class="m-0">
+        </thead>
+        <tbody>
+            <tr *ngFor="let transcript of transcripts; index as i">
+                <td  *ngIf= "transcriptType === 'real'" class="col-sm-2 pr-0 pl-2">{{ transcript.timeFrom | mins2Time}}</td>
+                <td *ngIf= "transcriptType === 'expected'" class="col-sm-2 pr-0 pl-4">{{transcript.order + 1}}</td>
+                <td class="col-sm-2" *ngIf="speakers[i]">
+                    {{speakers[i].toString().split(' ')[0]}}
+                </td>
+                <td class="col-sm-2" *ngIf="!speakers[i]">
+                    unknown
+                </td>
+                <td class="col-sm-8">
+                    <div *ngIf= "transcriptType === 'real'" (mouseover)=setMatchingScript(transcript) (mouseout)=setMatchingScript(null)
+                        [matTooltip]="getTooltipText(transcript)" class="p-1"
+                        [ngClass]="{'highlight-text': transcript.matching_sentence && (matchingPercentage) <= transcript.similarity*100}">
+                        {{ transcript.sentence }}
+                    </div>
+                    <div *ngIf= "transcriptType === 'expected'" class="p-1" [ngClass]="{'highlight-text': matchingScript && matchingScript.order === transcript.order}">
+                        {{ transcript.sentence }}
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,41 @@
+<ng-template #subHeader>
+  <!-- Transcript Menu -->
+  <ng-container *ngIf="calls">
+    <app-analyzer-menu [agents]='agents.agents$ | async' [activeAgentCalls]='calls.activeAgentCalls$ | async'
+      (onSelectAgent)=selectAgent($event) (onSelectCall)=selectCall($event)
+      [matchingPercentage]='calls.matchingPercentage$ | async' (onSetMatchingPercentage)=setMatchingPercentage($event)>
+    </app-analyzer-menu>
+  </ng-container>
+</ng-template>
+
+<div class="container-fluid">
+  <br>
+  <div class="row">
+    <!-- Expected Transcript -->
+    <div class="col-md-6">
+      <ng-container *ngIf="calls.activeTranscript$ | async as call">
+        <app-analyzer-transcript [transcripts]='activeTranscript.transcript' [heading] = "'Real'" [headerInfo] = "'Alignment to the expected script:'"
+          [matchingPercentage]='calls.matchingPercentage$ | async' (onGetScriptDetail)=onShowScriptDetail($event) 
+          [transcriptType]="'real'" [speakers]='transcriptSpeakers'
+          [transcriptMatchPercentage]='transcriptMatchPercentage' [matchingScript]=matchingScript>
+        </app-analyzer-transcript>
+      </ng-container>
+    </div>
+    <!-- Real Transcript -->
+    <div class="col-md-6">
+      <ng-container *ngIf='activeTranscript'>
+        <app-analyzer-transcript [transcripts]='activeTranscript.script' [heading] = "'Expected'" [headerInfo] = "'Percent of script covered:'"
+          [transcriptType]="'expected'" [speakers]='scriptSpeakers'
+           [transcriptMatchPercentage]='scriptMatchPercentage' [matchingScript]=matchingScript>
+        </app-analyzer-transcript>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+
+<ng-template>
+  <div class="empty-state">
+    No data to be displayed
+  </div>
+</ng-template>

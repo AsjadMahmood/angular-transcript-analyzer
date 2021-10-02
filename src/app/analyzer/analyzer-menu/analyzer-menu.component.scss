@@ -1,0 +1,18 @@
+.flex {
+    display:         flex;
+    justify-content: space-between;
+  
+    .selects {
+      display: flex;
+      gap:     1.5rem;
+  
+      label {
+        margin-right: .5rem;
+      }
+    }
+  }
+
+  .mat-slider-horizontal {
+    height: 48px;
+    min-width: 430px;
+}

@@ -1,0 +1,38 @@
+<div class="row justify-content-between">
+  <div class="col-md-6">
+    <div class="row">
+      <div class="ml-3 mr-2">
+        <mat-form-field appearance="fill">
+          <mat-icon class="mr-2" matPrefix>
+            supervised_user_circle
+          </mat-icon>
+          <mat-label>Agents</mat-label>
+          <mat-select (selectionChange)="selectAgent($event)">
+            <mat-option *ngFor="let agent of agents" [value]="agent.id">
+              {{agent.fullName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="ml-2">
+        <mat-form-field appearance="fill">
+          <mat-icon class="mr-2" matPrefix>call</mat-icon>
+          <mat-label>Calls</mat-label>
+          <mat-select (selectionChange)="selectCall($event)">
+            <mat-option *ngFor="let call of activeAgentCalls" [value]="call.id">
+              {{call.startTime | date:'M/d/yy'}} - {{call.customer.speakerName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 justify-content-end" style="align-items: center; display: flex; gap: .5rem;">
+    MATCHING SENSITIVITY
+    <mat-slider width="300px" color="primary" #matcher (change)="setMatchingPercentage(matcher)"
+      [value]="matchingPercentage" max="100" min="1" type="range">
+    </mat-slider>
+    <span>{{matchingPercentage}}%</span>
+  </div>
+</div>
